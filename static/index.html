@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Benedict Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div id="information-gathering">
+            <h1>Student Form</h1>
+            <form id="student-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="grade">Grade:</label>
+                    <select id="grade" name="grade" required>
+                        <option value="">Select Grade</option>
+                        <option value="Pre-K">Pre-K</option>
+                        <option value="Kindergarten">Kindergarten</option>
+                        <option value="1st Grade">1st Grade</option>
+                        <option value="2nd Grade">2nd Grade</option>
+                        <option value="3rd Grade">3rd Grade</option>
+                        <option value="4th Grade">4th Grade</option>
+                        <option value="5th Grade">5th Grade</option>
+                        <option value="6th Grade">6th Grade</option>
+                        <option value="7th Grade">7th Grade</option>
+                        <option value="8th Grade">8th Grade</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="addStudent()">Add</button>
+                </div>
+            </form>
+        
+            <div id="student-preview"></div>
+            <div class="form-group">
+                <button type="button" onclick="generateUniformChart()">Generate Uniform Chart</button>
+            </div>
+        </div>
+        <div id="generated-chart"></div>
+    </div>
+
+    <script>
+        const students = [];
+        
+        function addStudent() {
+            const name = document.getElementById('name').value;
+            const gender = document.getElementById('gender').value;
+            const grade = document.getElementById('grade').value;
+
+            if (name && gender && grade) {
+                const student = {
+                    name: name,
+                    gender: gender,
+                    grade: grade
+                };
+
+                students.push(student);
+                document.getElementById('student-form').reset();
+                updateStudentPreview();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function updateStudentPreview() {
+            const previewDiv = document.getElementById('student-preview');
+            previewDiv.innerHTML = '';
+
+            const studentList = document.createElement('ul');
+            students.forEach(student => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Name: ${student.name}, Gender: ${student.gender}, Grade: ${student.grade}`;
+                studentList.appendChild(listItem);
+            });
+
+            previewDiv.appendChild(studentList);
+        }
+
+        const uniformDays = {
+            "M": {
+                "Pre-K": ["Dress-1", "Dress-1", "Dress-1", "Mass-1", "Dress-1"],
+                "Kindergarten": ["Dress-2", "Gym", "Gym", "Mass-2", "Dress-2"],
+                "1st Grade": ["Dress-2", "Gym", "Gym", "Mass-2", "Dress-2"],
+                "2nd Grade": ["Dress-2", "Gym", "Gym", "Mass-2", "Dress-2"],
+                "3rd Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3+Gym", "Dress-3"],
+                "4th Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3+Gym", "Dress-3"],
+                "5th Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3+Gym", "Dress-3"],
+                "6th Grade": ["Dress-4", "Dress-4", "Dress-4", "Mass-4+Gym", "Dress-4"],
+                "7th Grade": ["Dress-4", "Dress-4", "Dress-4", "Mass-4+Gym", "Dress-4"],
+                "8th Grade": ["Dress-4", "Dress-4", "Dress-4", "Mass-4+Gym", "Dress-4"]
+            },
+            "F": {
+                "Pre-K": ["Dress-1", "Dress-1", "Dress-1", "Mass-1", "Dress-1"],
+                "1st Grade": ["Dress-2", "Gym-2", "Gym-2", "Mass-2", "Dress-2"],
+                "4th Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3", "Dress-3"]
+            }
+        };
+
+        const uniformRequirements = {
+            "M": {
+                "Dress-1": {
+                    "Bottoms": "Khaki",
+                    "Tops": "Polo",
+                    "Shoes": "Regular"
+                },
+                "Mass-1": {
+                    "Bottoms": "Khaki",
+                    "Tops": "Oxford",
+                    "Shoes": "Regular"
+                },
+                "Dress-2": {
+                    "Bottoms": "Khaki",
+                    "Tops": "Polo",
+                    "Shoes": "Regular",
+                    "Belt": true
+                },
+                "Mass-2": {
+                    "Bottoms": "Khaki",
+                    "Tops": "Oxford",
+                    "Shoes": "Regular",
+                    "Belt": true
+                },
+                "Gym": {
+                    "Bottoms": "Sweats",
+                    "Tops": "T-shirt",
+                    "Shoes": "Sneakers"
+                },
+                "Dress-3": {
+                    "Bottoms": "Khaki",
+                    "Tops": "Oxford",
+                    "Shoes": "Regular",
+                    "Belt": true
+                },
+                "Mass-3": {
+                    "Bottoms": "Khaki Pants",
+                    "Tops": "Oxford",
+                    "Belt": true,
+                    "Shoes": "Regular",
+                    "Tie": true
+                },
+                "Gym": {
+                    "Bottoms": "Sweats",
+                    "Tops": "T-shirt",
+                    "Shoes": "Sneakers"
+                },
+                "Dress-4": {
+                    "Bottoms": "Khaki Pants",
+                    "Tops": "Oxford + Blazer",
+                    "Belt": true,
+                    "Shoes": "Regular",
+                    "Tie": true
+                },
+                "Mass-4": {
+                    "Bottoms": "Khaki Pants",
+                    "Tops": "Oxford + Blazer",
+                    "Belt": true,
+                    "Shoes": "Regular",
+                    "Tie": true
+                },
+                "Gym": {
+                    "Bottoms": "Sweats",
+                    "Tops": "T-Shirt",
+                    "Shoes": "Sneakers",
+                },
+            }
+        };
+
+        function generateUniformChart() {
+            var dayChart = "<table>";
+            dayChart += "<thead><tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr></thead>";
+
+            const uniformRequirementsHash = {};
+
+            for (const student of students) {
+                const studentUniformDays = uniformDays[student.gender][student.grade];
+
+                if (!uniformRequirementsHash[student.gender]) {
+                    uniformRequirementsHash[student.gender] = {};
+                }
+
+                dayChart += "<tr>";
+                dayChart += "<td>" + student.name + "</td>";
+                for (const studentUniformDay of studentUniformDays) {
+                    const uniforms = studentUniformDay.split("+");
+                    dayChart += "<td>" + uniforms[0];
+                    uniformRequirementsHash[student.gender][uniforms[0]] = true;
+
+                    if (uniforms.length == 2) {
+                        dayChart += "</br>+Pack " + uniforms[1];
+                        uniformRequirementsHash[student.gender][uniforms[1]] = true;
+                    }
+                    dayChart += "</td>"
+                }
+                dayChart += "</tr>";
+            }
+            dayChart += "</table><br/>";
+
+            var allUniformChart;
+            const genderKeys = Object.keys(uniformRequirementsHash).sort();
+            for (const genderKey of genderKeys) {
+                const genderMap = { "M": "Boys", "F": "Girls" };
+                var genderUniformChart = genderMap[genderKey] + "<br/><table>";
+                genderUniformChart += "<thead><tr><th></th><th>Tops</th><th>Bottoms</th><th>Shoes</th><th>Belt</th><th>Tie</th></tr></thead>";
+
+                for (const typeKey of Object.keys(uniformRequirementsHash[genderKey])) {
+
+                    genderUniformChart += "<tr>";
+                    genderUniformChart += "<td>" + typeKey + "</td>";
+
+                    const genericRequirementKeys = ["Tops", "Bottoms", "Shoes", "Belt", "Tie"];
+                    for (const genericRequirementKey of genericRequirementKeys) {
+                        if (genericRequirementKey in uniformRequirements[genderKey][typeKey]) {
+                            if (uniformRequirements[genderKey][typeKey][genericRequirementKey] === true) {
+                                genderUniformChart += "<td>&#10003;</td>";
+                            }
+                            else {
+                                genderUniformChart += "<td>" +  uniformRequirements[genderKey][typeKey][genericRequirementKey] + "</td>";
+                            }
+                        }
+                        else {
+                            genderUniformChart += "<td></td>";
+                        }
+                    }
+
+                    genderUniformChart += "</tr>";
+                }
+
+                genderUniformChart += "</table>";
+                allUniformChart += genderUniformChart + "<br/>";
+            }
+
+            document.getElementById("information-gathering").innerHTML = "";
+            document.getElementById("generated-chart").innerHTML = dayChart + genderUniformChart;
+
+        }
+
+    </script>
+</body>
+</html>
