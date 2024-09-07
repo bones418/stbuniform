@@ -45,7 +45,7 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 5px;
             text-align: left;
         }
 
@@ -86,7 +86,6 @@
                         <option value="5th Grade">5th Grade</option>
                         <option value="6th Grade">6th Grade</option>
                         <option value="7th Grade">7th Grade</option>
-                        <option value="8th Grade">8th Grade</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -141,43 +140,64 @@
 
         const uniformDays = {
             "M": {
-                "Pre-K": ["Dress-1", "Dress-1", "Dress-1", "Mass-1", "Dress-1"],
-                "Kindergarten": ["Dress-2", "Gym", "Gym", "Mass-2", "Dress-2"],
-                "1st Grade": ["Dress-2", "Gym", "Gym", "Mass-2", "Dress-2"],
-                "2nd Grade": ["Dress-2", "Gym", "Gym", "Mass-2", "Dress-2"],
-                "3rd Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3+Gym", "Dress-3"],
-                "4th Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3+Gym", "Dress-3"],
-                "5th Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3+Gym", "Dress-3"],
-                "6th Grade": ["Dress-4", "Dress-4", "Dress-4", "Mass-4+Gym", "Dress-4"],
-                "7th Grade": ["Dress-4", "Dress-4", "Dress-4", "Mass-4+Gym", "Dress-4"],
-                "8th Grade": ["Dress-4", "Dress-4", "Dress-4", "Mass-4+Gym", "Dress-4"]
+                "Pre-K": ["Dress PreK", "Dress PreK", "Dress PreK", "Mass PreK", "Dress PreK"],
+                "Kindergarten": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
+                "1st Grade": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
+                "2nd Grade": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
+                "3rd Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Dress 3-5th"],
+                "4th Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Gym"],
+                "5th Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Dress 3-5th"],
+                "6th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Mass 6-7th", "Dress 6-7th"],
+                "7th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Mass 6-7th", "Dress 6-7th"]
+            },
+            "MP": {
+                "Pre-K": ["", "", "", "", ""],
+                "Kindergarten": ["", "", "", "", ""],
+                "1st Grade": ["", "", "", "", ""],
+                "2nd Grade": ["", "", "", "", ""],
+                "3rd Grade": ["", "", "", "", ""],
+                "4th Grade": ["", "", "", "Gym", ""],
+                "5th Grade": ["", "", "", "", ""],
+                "6th Grade": ["", "", "", "", ""],
+                "7th Grade": ["", "", "", "", ""]
             },
             "F": {
-                "Pre-K": ["Dress-1", "Dress-1", "Dress-1", "Mass-1", "Dress-1"],
-                "1st Grade": ["Dress-2", "Gym-2", "Gym-2", "Mass-2", "Dress-2"],
-                "4th Grade": ["Dress-3", "Dress-3", "Dress-3", "Mass-3", "Dress-3"]
+                "Pre-K": ["Dress PreK", "Dress PreK", "Dress PreK", "Mass PreK", "Dress PreK"],
+                "1st Grade": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
+                "4th Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Dress 3-5th"]
+            },
+            "FP": {
+                "Pre-K": ["", "", "", "", ""],
+                "Kindergarten": ["", "", "", "", ""],
+                "1st Grade": ["", "", "", "", ""],
+                "2nd Grade": ["", "", "", "", ""],
+                "3rd Grade": ["", "", "", "", ""],
+                "4th Grade": ["", "", "", "", ""],
+                "5th Grade": ["", "", "", "", ""],
+                "6th Grade": ["", "", "", "", ""],
+                "7th Grade": ["", "", "", "", ""]
             }
         };
 
         const uniformRequirements = {
             "M": {
-                "Dress-1": {
+                "Dress PreK": {
                     "Bottoms": "Khaki",
                     "Tops": "Polo",
                     "Shoes": "Regular"
                 },
-                "Mass-1": {
+                "Mass PreK": {
                     "Bottoms": "Khaki",
                     "Tops": "Oxford",
                     "Shoes": "Regular"
                 },
-                "Dress-2": {
+                "Dress K-2nd": {
                     "Bottoms": "Khaki",
                     "Tops": "Polo",
                     "Shoes": "Regular",
                     "Belt": true
                 },
-                "Mass-2": {
+                "Mass K-2nd": {
                     "Bottoms": "Khaki",
                     "Tops": "Oxford",
                     "Shoes": "Regular",
@@ -188,43 +208,33 @@
                     "Tops": "T-shirt",
                     "Shoes": "Sneakers"
                 },
-                "Dress-3": {
+                "Dress 3-5th": {
                     "Bottoms": "Khaki",
                     "Tops": "Oxford",
                     "Shoes": "Regular",
                     "Belt": true
                 },
-                "Mass-3": {
+                "Mass 3-5th": {
                     "Bottoms": "Khaki Pants",
                     "Tops": "Oxford",
                     "Belt": true,
                     "Shoes": "Regular",
                     "Tie": true
                 },
-                "Gym": {
-                    "Bottoms": "Sweats",
-                    "Tops": "T-shirt",
-                    "Shoes": "Sneakers"
-                },
-                "Dress-4": {
+                "Dress 6-7th": {
                     "Bottoms": "Khaki Pants",
                     "Tops": "Oxford + Blazer",
                     "Belt": true,
                     "Shoes": "Regular",
                     "Tie": true
                 },
-                "Mass-4": {
+                "Mass 6-7th": {
                     "Bottoms": "Khaki Pants",
                     "Tops": "Oxford + Blazer",
                     "Belt": true,
                     "Shoes": "Regular",
                     "Tie": true
-                },
-                "Gym": {
-                    "Bottoms": "Sweats",
-                    "Tops": "T-Shirt",
-                    "Shoes": "Sneakers",
-                },
+                }
             }
         };
 
@@ -243,16 +253,19 @@
 
                 dayChart += "<tr>";
                 dayChart += "<td>" + student.name + "</td>";
+                var index = 0;
                 for (const studentUniformDay of studentUniformDays) {
-                    const uniforms = studentUniformDay.split("+");
-                    dayChart += "<td>" + uniforms[0];
-                    uniformRequirementsHash[student.gender][uniforms[0]] = true;
+                    const uniform = studentUniformDay;
+                    dayChart += "<td>" + uniform;
+                    uniformRequirementsHash[student.gender][uniform] = true;
 
-                    if (uniforms.length == 2) {
-                        dayChart += "</br>+Pack " + uniforms[1];
-                        uniformRequirementsHash[student.gender][uniforms[1]] = true;
+                    const pack = uniformDays[student.gender + "P"][student.grade][index];
+                    if (pack != "") {
+                        dayChart += "</br>+Pack " + pack;
+                        uniformRequirementsHash[student.gender][pack] = true;
                     }
                     dayChart += "</td>"
+                    index++;
                 }
                 dayChart += "</tr>";
             }
