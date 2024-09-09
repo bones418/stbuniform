@@ -10,7 +10,7 @@
             margin: 20px;
         }
         .form-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
         }
         .form-group {
@@ -47,6 +47,7 @@
             border: 1px solid #ddd;
             padding: 5px;
             text-align: left;
+            vertical-align: top;
         }
 
         th {
@@ -54,15 +55,44 @@
             color: #333;
             font-weight: bold;
         }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: #069;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 150px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <div id="information-gathering">
-            <h1>Student Form</h1>
+            <h1>St. Benedict's Uniform Packing Assistant</h1>
             <form id="student-form">
                 <div class="form-group">
-                    <label for="name">Name:</label>
+                    <label for="name">Student Name:</label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
@@ -89,6 +119,16 @@
                     </select>
                 </div>
 
+
+                <div class="checkbox-container">
+                    Gym Days (<span class="tooltip">info<span class="tooltiptext">Days when this child should have gym clothes.</span></span>)
+                    &nbsp;&nbsp;<label><input type="checkbox" name="gymday" value="mon"> Mon</label>
+                    &nbsp;&nbsp;<label><input type="checkbox" name="gymday" value="tue"> Tue</label>
+                    &nbsp;&nbsp;<label><input type="checkbox" name="gymday" value="wed"> Wed</label>
+                    &nbsp;&nbsp;<label><input type="checkbox" name="gymday" value="thu"> Thu</label>
+                    &nbsp;&nbsp;<label><input type="checkbox" name="gymday" value="fri"> Fri</label>
+                </div>
+                <br>
                 <div class="form-group">
                     <button type="button" onclick="addStudent()">Add</button>
                 </div>
@@ -104,6 +144,7 @@
 
     <script>
         const students = [];
+        const studentGym = [];
         
         function addStudent() {
             const name = document.getElementById('name').value;
@@ -118,8 +159,13 @@
                 };
 
                 students.push(student);
+                const checkboxes = document.querySelectorAll('input[name="gymday"]');
+                const thisStudentGym = Array.from(checkboxes).map(checkbox => checkbox.checked);
+                studentGym.push(thisStudentGym);
+
                 document.getElementById('student-form').reset();
                 updateStudentPreview();
+                document.getElementById('name').focus();
             } else {
                 alert('Please fill out all fields.');
             }
@@ -142,11 +188,11 @@
         const uniformDays = {
             "M": {
                 "Pre-K": ["Dress PreK", "Dress PreK", "Dress PreK", "Mass PreK", "Dress PreK"],
-                "Kindergarten": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
-                "1st Grade": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
-                "2nd Grade": ["Dress K-2nd", "Gym", "Gym", "Mass K-2nd", "Dress K-2nd"],
+                "Kindergarten": ["Dress K-2nd", "Dress K-2nd", "Dress K-2nd", "Mass K-2nd", "Dress K-2nd"],
+                "1st Grade": ["Dress K-2nd", "Dress K-2nd", "Dress K-2nd", "Mass K-2nd", "Dress K-2nd"],
+                "2nd Grade": ["Dress K-2nd", "Dress K-2nd", "Dress K-2nd", "Mass K-2nd", "Dress K-2nd"],
                 "3rd Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Dress 3-5th"],
-                "4th Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Gym"],
+                "4th Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Dress 3-5th"],
                 "5th Grade": ["Dress 3-5th", "Dress 3-5th", "Dress 3-5th", "Mass 3-5th", "Dress 3-5th"],
                 "6th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Mass 6-7th", "Dress 6-7th"],
                 "7th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Mass 6-7th", "Dress 6-7th"]
@@ -157,21 +203,21 @@
                 "1st Grade": ["", "", "", "", ""],
                 "2nd Grade": ["", "", "", "", ""],
                 "3rd Grade": ["", "", "", "", ""],
-                "4th Grade": ["", "", "", "Gym", ""],
+                "4th Grade": ["", "", "", "", ""],
                 "5th Grade": ["", "", "", "", ""],
                 "6th Grade": ["", "", "", "", ""],
                 "7th Grade": ["", "", "", "", ""]
             },
             "F": {
-                "Pre-K": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th"],
-                "Kindergarten": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th"],
-                "1st Grade": ["Dress PreK-5th", "Gym", "Gym", "Dress PreK-5th", "Dress PreK-5th"],
-                "2nd Grade": ["Dress PreK-5th", "Gym", "Gym", "Dress PreK-5th", "Dress PreK-5th"],
-                "3rd Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th"],
-                "4th Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Gym"],
-                "5th Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th"],
-                "6th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Dress 6-7th"],
-                "7th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Dress 6-7th"]
+                "Pre-K": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "Kindergarten": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "1st Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "2nd Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "3rd Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "4th Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "5th Grade": ["Dress PreK-5th", "Dress PreK-5th", "Dress PreK-5th", "Mass PreK-5th", "Dress PreK-5th"],
+                "6th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Mass 6-7th", "Dress 6-7th"],
+                "7th Grade": ["Dress 6-7th", "Dress 6-7th", "Dress 6-7th", "Mass 6-7th", "Dress 6-7th"]
             },
             "FP": {
                 "Pre-K": ["", "", "", "", ""],
@@ -179,7 +225,7 @@
                 "1st Grade": ["", "", "", "", ""],
                 "2nd Grade": ["", "", "", "", ""],
                 "3rd Grade": ["", "", "", "", ""],
-                "4th Grade": ["", "", "", "Gym", ""],
+                "4th Grade": ["", "", "", "", ""],
                 "5th Grade": ["", "", "", "", ""],
                 "6th Grade": ["", "", "", "", ""],
                 "7th Grade": ["", "", "", "", ""]
@@ -267,6 +313,18 @@
                     "Bike Shorts": "Optional",
                     "Tops": "Oxford + Blazer",
                     "Shoes": "Regular"
+                },
+                "Mass PreK-5th": {
+                    "Bottoms": "Jumper",
+                    "Bike Shorts": "Optional",
+                    "Tops": "Collared",
+                    "Shoes": "Regular"
+                },
+                "Mass 6-7th": {
+                    "Bottoms": "Skirt",
+                    "Bike Shorts": "Optional",
+                    "Tops": "Oxford + Blazer",
+                    "Shoes": "Regular"
                 }
             }
         };
@@ -277,6 +335,7 @@
 
             const uniformRequirementsHash = {};
 
+            var studentIndex = 0;
             for (const student of students) {
                 const studentUniformDays = uniformDays[student.gender][student.grade];
 
@@ -286,21 +345,34 @@
 
                 dayChart += "<tr>";
                 dayChart += "<td>" + student.name + "</td>";
-                var index = 0;
+                var uniformDayIndex = 0;
                 for (const studentUniformDay of studentUniformDays) {
                     const uniform = studentUniformDay;
-                    dayChart += "<td>" + uniform;
-                    uniformRequirementsHash[student.gender][uniform] = true;
+                    const studentGymOverride = studentGym[studentIndex][uniformDayIndex] === true;
 
-                    const pack = uniformDays[student.gender + "P"][student.grade][index];
-                    if (pack != "") {
-                        dayChart += "</br>+Pack " + pack;
-                        uniformRequirementsHash[student.gender][pack] = true;
+                    if (!studentGymOverride || (studentGymOverride && !["Pre-K", "Kindergarten", "1st Grade", "2nd Grade"].includes(student.grade))) {
+                        dayChart += "<td>" + uniform;
+                        uniformRequirementsHash[student.gender][uniform] = true;
+
+                        var pack = uniformDays[student.gender + "P"][student.grade][uniformDayIndex];
+                        if (studentGymOverride) {
+                            pack = "Gym";
+                        }
+                        if (pack != "") {
+                            dayChart += "</br>+Pack " + pack;
+                            uniformRequirementsHash[student.gender][pack] = true;
+                        }
                     }
+                    else {
+                        dayChart += "<td>Gym";
+                        uniformRequirementsHash[student.gender]["Gym"] = true;
+                    }
+                    
                     dayChart += "</td>"
-                    index++;
+                    uniformDayIndex++;
                 }
                 dayChart += "</tr>";
+                studentIndex++;
             }
             dayChart += "</table><br/>";
 
@@ -308,16 +380,16 @@
             const genderKeys = Object.keys(uniformRequirementsHash).sort();
             for (const genderKey of genderKeys) {
                 const genderMap = { "M": "Boys", "F": "Girls" };
-                var genderUniformChart = genderMap[genderKey] + "<br/><table>";
+                var genderUniformChart = "<table>";
 
                 if (genderKey == "M") {
-                    genderUniformChart += "<thead><tr><th></th><th>Tops</th><th>Bottoms</th><th>Tie</th><th>Belt</th><th>Shoes</th></tr></thead>";
+                    genderUniformChart += "<thead><tr><th>Boys Uniform</th><th>Tops</th><th>Bottoms</th><th>Tie</th><th>Belt</th><th>Shoes</th></tr></thead>";
                 }
                 else {
-                    genderUniformChart += "<thead><tr><th></th><th>Tops</th><th>Bottoms</th><th>Bike Shorts</th><th>Shoes</th></tr></thead>";
+                    genderUniformChart += "<thead><tr><th>Girls Uniform</th><th>Tops</th><th>Bottoms</th><th>Bike Shorts</th><th>Shoes</th></tr></thead>";
                 }
 
-                for (const typeKey of Object.keys(uniformRequirementsHash[genderKey])) {
+                for (const typeKey of Object.keys(uniformRequirementsHash[genderKey]).sort()) {
 
                     genderUniformChart += "<tr>";
                     genderUniformChart += "<td>" + typeKey + "</td>";
@@ -350,7 +422,7 @@
                 genderUniformChart += "</table>";
                 allUniformChart += genderUniformChart + "<br/>";
             }
-
+            allUniformChart += "</br>Happy Organizing! - The Balboni Family";
             document.getElementById("information-gathering").innerHTML = "";
             document.getElementById("generated-chart").innerHTML = dayChart + allUniformChart;
 
